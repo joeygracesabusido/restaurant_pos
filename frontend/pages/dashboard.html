@@ -1,0 +1,63 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <!-- Header -->
+    <div class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">🍽️ Restaurant POS</h1>
+                <p id="welcome-message" class="text-gray-600 text-sm">Welcome, <strong>User</strong></p>
+            </div>
+            <button id="logout-button" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition">Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Statistics -->
+        <div id="stats-grid" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <!-- Stats will be rendered here -->
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <button data-view="menu" class="quick-action-button bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-8 rounded-lg shadow-lg transition transform hover:scale-105">
+                <div class="text-4xl mb-2">📋</div>
+                <div class="text-xl">Browse Menus</div>
+                <div class="text-sm opacity-90">Create new orders</div>
+            </button>
+            <button data-view="insert-menu" class="quick-action-button bg-gradient-to-br from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-black font-bold py-8 rounded-lg shadow-lg transition transform hover:scale-105">
+                <div class="text-4xl mb-2">➕</div>
+                <div class="text-xl">Insert Menu Item</div>
+                <div class="text-sm opacity-90">Add new dishes to the menu</div>
+            </button>
+            <button data-view="orders" class="quick-action-button bg-gradient-to-br from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-8 rounded-lg shadow-lg transition transform hover:scale-105">
+                <div class="text-4xl mb-2">📦</div>
+                <div class="text-xl">View Orders</div>
+                <div class="text-sm opacity-90">Manage all orders</div>
+            </button>
+
+             <!-- <button data-view="manage-menu" class="quick-action-button bg-gradient-to-br from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-8 rounded-lg shadow-lg transition transform hover:scale-105">
+                <div class="text-4xl mb-2">🖼️</div>
+                <div class="text-xl">Manage Menu</div>
+                <div class="text-sm opacity-90">Edit Menu</div>
+            </button> -->
+            
+            <button data-view="manage-menu" class="quick-action-button bg-gradient-to-br from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white font-bold py-8 rounded-lg shadow-lg transition transform hover:scale-105">
+                <div class="text-4xl mb-2">🖼️</div>
+                <div class="text-xl">Manage Menu</div>
+                <div class="text-sm opacity-90">Edit menu</div>
+            </button>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Recent Orders</h2>
+                <button data-view="orders" class="quick-action-button text-blue-600 hover:text-blue-800 font-semibold">View All →</button>
+            </div>
+            
+            <div id="recent-orders-container">
+                <!-- Recent orders will be rendered here -->
+            </div>
+        </div>
+    </div>
+</div>

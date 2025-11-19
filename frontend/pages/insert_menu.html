@@ -1,0 +1,54 @@
+<div class="min-h-screen bg-gray-100">
+    <!-- Header -->
+    <div class="bg-white shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h2 class="text-2xl font-bold text-gray-800">➕ Insert New Menu Item</h2>
+            <div class="space-x-3">
+                <button id="back-to-dashboard" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold">← Back to Dashboard</button>
+                <button id="logout-button" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 font-semibold">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-2xl mx-auto px-6 py-8">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <form id="createMenuItemForm">
+                <div class="space-y-5">
+                    <div>
+                        <label for="itemName" class="block text-sm font-medium text-gray-700">Item Name</label>
+                        <input type="text" id="itemName" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="itemDescription" class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="itemDescription" rows="3" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    <div>
+                        <label for="itemPrice" class="block text-sm font-medium text-gray-700">Price</label>
+                        <input type="number" id="itemPrice" step="0.01" min="0.01" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="itemCategory" class="block text-sm font-medium text-gray-700">Category</label>
+                        <select id="itemCategory" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <option value="">Select a category</option>
+                            <option value="Snacks">Snack</option>
+                            <option value="Dishes">Dishes</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="itemAvailable" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked>
+                        <label for="itemAvailable" class="text-sm font-medium text-gray-700">Available</label>
+                    </div>
+                    <div>
+                        <label for="itemImageUrl" class="block text-sm font-medium text-gray-700">Image URL</label>
+                        <input type="text" id="itemImageUrl" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="/images/your-item.jpg">
+                    </div>
+                    <div>
+                        <label for="itemEmoji" class="block text-sm font-medium text-gray-700">Emoji (e.g., 🍔)</label>
+                        <input type="text" id="itemEmoji" maxlength="2" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="🍔">
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 font-bold transition">Create Menu Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

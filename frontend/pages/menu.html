@@ -1,0 +1,40 @@
+<div class="min-h-screen bg-gray-100">
+    <!-- Header with back button -->
+    <div class="bg-white shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+                <button id="back-to-dashboard" class="text-blue-600 hover:text-blue-800 font-semibold mb-2">← Back to Dashboard</button>
+                <h2 class="text-2xl font-bold text-gray-800">📋 Browse Menu</h2>
+            </div>
+            <button id="logout-button" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 font-semibold">Logout</button>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Categories Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-lg shadow-md p-6 sticky top-20">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800">📂 Categories</h3>
+                    <div id="categories-list" class="space-y-2">
+                        <!-- Categories will be rendered here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Items Grid -->
+            <div class="lg:col-span-2">
+                <div id="menu-items-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-max">
+                    <!-- Menu items will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Shopping Cart Sidebar -->
+            <div class="lg:col-span-1">
+                <div id="cart-sidebar" class="bg-white rounded-lg shadow-md p-6 sticky top-20">
+                    <!-- Cart will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

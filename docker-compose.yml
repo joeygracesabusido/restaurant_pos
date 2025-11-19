@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: pos_api
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    networks:
+      - pos_network
+    environment:
+      - DATABASE_URL=mongodb://root:Genesis11@192.46.225.247:27017/pos_restaurant?authSource=admin
+      - DATABASE_NAME=pos_restaurant
+      - SECRET_KEY=restaurant-pos-secret-key-change-in-production
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+    healthcheck:
+      test: curl -f http://localhost:8000/api/health || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: pos_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    networks:
+      - pos_network
+
+networks:
+  pos_network:
+    driver: bridge

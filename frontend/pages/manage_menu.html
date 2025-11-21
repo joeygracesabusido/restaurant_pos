@@ -49,4 +49,70 @@
             </div>
         </div>
     </div>
+
+    <!-- Edit Item Modal -->
+    <div id="editItemModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 xl:w-2/5 shadow-lg rounded-md bg-white">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">✏️ Edit Menu Item</h3>
+            <form id="editMenuItemForm">
+                <input type="hidden" id="editItemId">
+                <div class="space-y-5">
+                    <div>
+                        <label for="editItemName" class="block text-sm font-medium text-gray-700">Item Name</label>
+                        <input type="text" id="editItemName" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="editItemDescription" class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="editItemDescription" rows="3" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    <div>
+                        <label for="editItemPrice" class="block text-sm font-medium text-gray-700">Base Price</label>
+                        <input type="number" id="editItemPrice" step="0.01" min="0.01" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="editItemCategory" class="block text-sm font-medium text-gray-700">Category</label>
+                        <select id="editItemCategory" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <!-- Categories will be loaded here -->
+                        </select>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="editItemAvailable" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                        <label for="editItemAvailable" class="text-sm font-medium text-gray-700">Available</label>
+                    </div>
+
+                    <!-- Sizes Section -->
+                    <div class="border-t pt-4">
+                        <h4 class="text-lg font-medium text-gray-900">Sizes</h4>
+                        <div id="edit-sizes-container" class="space-y-2 mt-2">
+                            <!-- Existing and new size fields will be inserted here -->
+                        </div>
+                        <button type="button" id="add-edit-size-button" class="mt-2 text-sm text-blue-600 hover:text-blue-800 font-semibold">+ Add Size</button>
+                    </div>
+
+                    <!-- Add-ons Section -->
+                    <div class="border-t pt-4">
+                        <h4 class="text-lg font-medium text-gray-900">Add-ons</h4>
+                        <div id="edit-addons-container" class="space-y-2 mt-2">
+                            <!-- Existing and new addon fields will be inserted here -->
+                        </div>
+                        <button type="button" id="add-edit-addon-button" class="mt-2 text-sm text-blue-600 hover:text-blue-800 font-semibold">+ Add Add-on</button>
+                    </div>
+
+                    <div>
+                        <label for="editItemImageUrl" class="block text-sm font-medium text-gray-700">Image URL</label>
+                        <input type="text" id="editItemImageUrl" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="/images/your-item.jpg">
+                        <button type="button" data-item-id="" class="use-last-image-button hidden text-xs text-blue-600 hover:text-blue-800 mt-1">Use last uploaded image</button>
+                    </div>
+                    <div>
+                        <label for="editItemEmoji" class="block text-sm font-medium text-gray-700">Emoji (e.g., 🍔)</label>
+                        <input type="text" id="editItemEmoji" maxlength="2" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="🍔">
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" id="cancelEditItem" class="bg-gray-400 text-white py-3 px-6 rounded-lg hover:bg-gray-500 font-bold transition">Cancel</button>
+                        <button type="submit" class="bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 font-bold transition">Update Item</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

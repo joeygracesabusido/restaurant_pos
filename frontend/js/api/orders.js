@@ -24,7 +24,9 @@ export async function createOrder(cartItems) {
         items: cartItems.map(item => ({
             menu_item_id: item.id,
             quantity: item.quantity,
-            special_instructions: item.instructions || null
+            special_instructions: item.instructions || null,
+            size: item.size,
+            addons: item.addons
         })),
         table_number: parseInt(document.getElementById('tableNumber')?.value) || null,
         customer_name: document.getElementById('customerName')?.value || null,

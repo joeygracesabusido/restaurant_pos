@@ -27,14 +27,13 @@ async def create_order(
     """
     Create a new order.
     """
-    # Fetch menu items and calculate total
     total_amount = 0
     order_items = []
     
     for item_in in order_in.items:
         try:
             menu_item_id = ObjectId(item_in.menu_item_id)
-        except:
+        except Exception:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid menu item ID")
         
         menu_item = await db.menu_items.find_one({"_id": menu_item_id})
@@ -44,14 +43,24 @@ async def create_order(
         if not menu_item.get("available", True):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Menu item {menu_item['name']} is not available")
         
-        subtotal = menu_item["price"] * item_in.quantity
+        # Calculate price with size and addons
+        price_per_item = menu_item["price"]
+        if item_in.size:
+            price_per_item += item_in.size.price_modifier
+        
+        for addon in item_in.addons:
+            price_per_item += addon.price
+            
+        subtotal = price_per_item * item_in.quantity
         total_amount += subtotal
         
         order_items.append({
             "menu_item_id": str(menu_item_id),
             "quantity": item_in.quantity,
             "special_instructions": item_in.special_instructions,
-            "price_per_item": menu_item["price"],
+            "size": item_in.size.dict() if item_in.size else None,
+            "addons": [addon.dict() for addon in item_in.addons],
+            "price_per_item": price_per_item,
             "subtotal": subtotal
         })
     

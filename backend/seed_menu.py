@@ -93,7 +93,15 @@ async def seed_menu():
             "price": 15.99,
             "category_id": cat_ids["Main Courses"],
             "available": True,
-            "emoji": "🍔"
+            "emoji": "🍔",
+            "sizes": [
+                {"name": "Single", "price_modifier": 0.0},
+                {"name": "Double", "price_modifier": 4.0}
+            ],
+            "addons": [
+                {"name": "Extra Cheese", "price": 1.50},
+                {"name": "Avocado", "price": 2.00}
+            ]
         },
         
         # Desserts
@@ -119,7 +127,11 @@ async def seed_menu():
             "price": 5.99,
             "category_id": cat_ids["Desserts"],
             "available": True,
-            "emoji": "🍦"
+            "emoji": "🍦",
+            "addons": [
+                {"name": "Chocolate Syrup", "price": 1.00},
+                {"name": "Caramel Drizzle", "price": 1.00}
+            ]
         },
         {
             "name": "Cheesecake",
@@ -137,7 +149,12 @@ async def seed_menu():
             "price": 3.99,
             "category_id": cat_ids["Beverages"],
             "available": True,
-            "emoji": "☕"
+            "emoji": "☕",
+             "sizes": [
+                {"name": "Small", "price_modifier": 0.0},
+                {"name": "Medium", "price_modifier": 1.0},
+                {"name": "Large", "price_modifier": 1.50}
+            ],
         },
         {
             "name": "Fresh Juice",
@@ -153,7 +170,11 @@ async def seed_menu():
             "price": 2.99,
             "category_id": cat_ids["Beverages"],
             "available": True,
-            "emoji": "🥤"
+            "emoji": "🥤",
+            "sizes": [
+                {"name": "Can", "price_modifier": 0.0},
+                {"name": "Bottle", "price_modifier": 1.0}
+            ],
         },
         {
             "name": "Wine Glass",

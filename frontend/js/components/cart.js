@@ -4,27 +4,47 @@ import { createOrder } from '../api/orders.js';
 import { switchView } from '../handlers/view_handlers.js';
 import { showError } from '../utils/errors.js';
 
-export function addToCart(itemId) {
+function generateCartItemId(itemId, size, addons) {
+    const sizeId = size ? size.name : 'default';
+    const addonIds = addons.map(a => a.name).sort().join('-');
+    return `${itemId}-${sizeId}-${addonIds}`;
+}
+
+export function addToCart(itemId, size = null, addons = []) {
     const itemToAdd = appState.menuItems.find(item => String(item.id) === String(itemId));
     if (!itemToAdd) {
         showError('Item not found!');
         return;
     }
 
-    const existingItem = appState.cart.find(item => String(item.id) === String(itemId));
+    const cartItemId = generateCartItemId(itemId, size, addons);
+    const existingItem = appState.cart.find(item => item.cartItemId === cartItemId);
+
     if (existingItem) {
         existingItem.quantity++;
     } else {
+        let price = itemToAdd.price;
+        if (size) {
+            price += size.price_modifier;
+        }
+        addons.forEach(addon => {
+            price += addon.price;
+        });
+
         appState.cart.push({
+            cartItemId,
             id: itemToAdd.id,
             name: itemToAdd.name,
-            price: itemToAdd.price,
+            price,
             quantity: 1,
-            instructions: ''
+            instructions: '',
+            size,
+            addons
         });
     }
     renderApp();
 }
+
 
 function removeFromCart(index) {
     appState.cart.splice(index, 1);
@@ -64,6 +84,8 @@ export function renderCart(container) {
                     <div class="flex justify-between items-start mb-2">
                         <div class="flex-1">
                             <p class="font-semibold text-gray-800 text-sm">${item.name}</p>
+                            ${item.size ? `<p class="text-xs text-gray-500">Size: ${item.size.name}</p>` : ''}
+                            ${item.addons.length > 0 ? `<p class="text-xs text-gray-500">Add-ons: ${item.addons.map(a => a.name).join(', ')}</p>` : ''}
                             <p class="text-blue-600 font-bold text-sm">${formatCurrency(item.price)}</p>
                         </div>
                         <button data-idx="${idx}" class="remove-from-cart-button text-red-600 hover:text-red-800 font-bold text-lg leading-none">✕</button>

@@ -23,20 +23,36 @@
                         <textarea id="itemDescription" rows="3" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                     </div>
                     <div>
-                        <label for="itemPrice" class="block text-sm font-medium text-gray-700">Price</label>
+                        <label for="itemPrice" class="block text-sm font-medium text-gray-700">Base Price</label>
                         <input type="number" id="itemPrice" step="0.01" min="0.01" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     </div>
                     <div>
                         <label for="itemCategory" class="block text-sm font-medium text-gray-700">Category</label>
                         <select id="itemCategory" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                             <option value="">Select a category</option>
-                            <option value="Snacks">Snack</option>
-                            <option value="Dishes">Dishes</option>
+                           
                         </select>
                     </div>
                     <div class="flex items-center space-x-2">
                         <input type="checkbox" id="itemAvailable" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" checked>
                         <label for="itemAvailable" class="text-sm font-medium text-gray-700">Available</label>
+                    </div>
+                     <!-- Sizes -->
+                     <div class="border-t pt-4">
+                        <h3 class="text-lg font-medium text-gray-900">Sizes</h3>
+                        <div id="sizes-container" class="space-y-2 mt-2">
+                            <!-- Dynamic size fields will be inserted here -->
+                        </div>
+                        <button type="button" id="add-size-button" class="mt-2 text-sm text-blue-600 hover:text-blue-800 font-semibold">+ Add Size</button>
+                    </div>
+
+                    <!-- Add-ons -->
+                    <div class="border-t pt-4">
+                        <h3 class="text-lg font-medium text-gray-900">Add-ons</h3>
+                        <div id="addons-container" class="space-y-2 mt-2">
+                            <!-- Dynamic addon fields will be inserted here -->
+                        </div>
+                        <button type="button" id="add-addon-button" class="mt-2 text-sm text-blue-600 hover:text-blue-800 font-semibold">+ Add Add-on</button>
                     </div>
                     <div>
                         <label for="itemImageUrl" class="block text-sm font-medium text-gray-700">Image URL</label>

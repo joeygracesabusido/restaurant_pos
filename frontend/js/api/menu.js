@@ -80,28 +80,16 @@ export async function uploadMenuImage() {
     }
 }
 
-export async function updateMenuItem(itemId, imageUrl, emoji) {
-    if (!imageUrl.trim() && !emoji.trim()) {
-        showError('Please enter an image URL or an emoji');
-        return;
-    }
-
+export async function updateMenuItem(itemId, updateData) {
     try {
-        const updateData = {
-            image_url: imageUrl.trim(),
-            emoji: emoji.trim()
-        };
-
         const response = await apiCall(`/menu/items/${itemId}`, 'PUT', updateData);
         if (response) {
             showSuccess('Menu item updated!');
-            
-            const item = appState.menuItems.find(i => i.id === itemId);
-            if (item) {
-                item.image_url = imageUrl.trim();
-                item.emoji = emoji.trim();
+            // Update the item in appState
+            const index = appState.menuItems.findIndex(item => item.id === itemId);
+            if (index !== -1) {
+                appState.menuItems[index] = { ...appState.menuItems[index], ...updateData };
             }
-            
             renderApp();
         }
     } catch (error) {
@@ -127,6 +115,26 @@ export async function createMenuItem() {
         return;
     }
 
+    const sizes = [];
+    const sizeRows = document.querySelectorAll('#sizes-container > div');
+    for (const row of sizeRows) {
+        const name = row.querySelector('.size-name').value;
+        const price_modifier = parseFloat(row.querySelector('.size-modifier').value);
+        if (name && !isNaN(price_modifier)) {
+            sizes.push({ name, price_modifier });
+        }
+    }
+
+    const addons = [];
+    const addonRows = document.querySelectorAll('#addons-container > div');
+    for (const row of addonRows) {
+        const name = row.querySelector('.addon-name').value;
+        const price = parseFloat(row.querySelector('.addon-price').value);
+        if (name && !isNaN(price)) {
+            addons.push({ name, price });
+        }
+    }
+
     const newItem = {
         name,
         description: description || null,
@@ -134,7 +142,9 @@ export async function createMenuItem() {
         category_id,
         available,
         image_url: image_url || null,
-        emoji: emoji || null
+        emoji: emoji || null,
+        sizes,
+        addons
     };
 
     const result = await apiCall('/menu/items', 'POST', newItem);

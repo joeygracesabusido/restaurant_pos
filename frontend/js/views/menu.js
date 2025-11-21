@@ -8,10 +8,14 @@ import { returnToDashboard } from '../handlers/view_handlers.js';
 import { logout } from '../api/api.js';
 
 export async function renderMenuView(content) {
+    console.log("Entering renderMenuView");
     // Fetch categories and menu items if they haven't been loaded yet
     if (appState.categories.length === 0 || appState.menuItems.length === 0) {
+        console.log("Fetching categories and menu items...");
         await fetchCategories();
         await fetchMenuItems();
+        console.log("Fetched categories:", appState.categories);
+        console.log("Fetched menu items:", appState.menuItems);
     }
 
     content.innerHTML = await loadHTML('menu');
@@ -22,4 +26,5 @@ export async function renderMenuView(content) {
     renderCategories(document.getElementById('categories-list'));
     renderMenuItems(document.getElementById('menu-items-grid'));
     renderCart(document.getElementById('cart-sidebar'));
+    console.log("Exiting renderMenuView");
 }

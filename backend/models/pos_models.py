@@ -37,6 +37,14 @@ class Category(CategoryInDBBase):
 
 # ============= Menu Item Models =============
 
+class Size(BaseModel):
+    name: str = Field(..., example="Small")
+    price_modifier: float = Field(..., example=0.0)
+
+class Addon(BaseModel):
+    name: str = Field(..., example="Extra Cheese")
+    price: float = Field(..., gt=0, example=1.50)
+
 class MenuItemBase(BaseModel):
     name: str = Field(..., example="Burger")
     description: Optional[str] = Field(None, example="Delicious beef burger")
@@ -45,6 +53,8 @@ class MenuItemBase(BaseModel):
     available: bool = Field(default=True, example=True)
     image_url: Optional[str] = Field(None, example="/api/uploads/images/burger.jpg")
     emoji: Optional[str] = Field(None, example="🍔")
+    sizes: List[Size] = Field(default=[], example=[{"name": "Small", "price_modifier": 0.0}, {"name": "Large", "price_modifier": 2.50}])
+    addons: List[Addon] = Field(default=[], example=[{"name": "Extra Cheese", "price": 1.50}, {"name": "Bacon", "price": 2.00}])
 
 class MenuItemCreate(MenuItemBase):
     pass
@@ -57,6 +67,9 @@ class MenuItemUpdate(BaseModel):
     available: Optional[bool] = None
     image_url: Optional[str] = None
     emoji: Optional[str] = None
+    sizes: Optional[List[Size]] = None
+    addons: Optional[List[Addon]] = None
+
 
 class MenuItemInDBBase(MenuItemBase):
     id: str
@@ -76,13 +89,17 @@ class OrderItemBase(BaseModel):
     menu_item_id: str = Field(..., example="507f1f77bcf86cd799439011")
     quantity: int = Field(..., gt=0, example=2)
     special_instructions: Optional[str] = Field(None, example="No onions")
+    size: Optional[Size] = Field(None, example={"name": "Large", "price_modifier": 2.50})
+    addons: List[Addon] = Field(default=[], example=[{"name": "Extra Cheese", "price": 1.50}])
+
 
 class OrderItemCreate(OrderItemBase):
     pass
 
 class OrderItemInDBBase(OrderItemBase):
-    price_per_item: float = Field(..., gt=0, example=9.99)
-    subtotal: float = Field(..., gt=0, example=19.98)
+    price_per_item: float = Field(..., gt=0, example=13.99)
+    subtotal: float = Field(..., gt=0, example=27.98)
+
 
 class OrderItem(OrderItemInDBBase):
     pass

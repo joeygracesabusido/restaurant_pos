@@ -161,6 +161,7 @@ async def list_menu_items(
         query["category_id"] = category_id
     
     items = await db.menu_items.find(query).to_list(None)
+    print(f"Found {len(items)} items in the database.")
     
     processed_items = []
     for item_doc in items:

@@ -1,6 +1,6 @@
 import { loadHTML } from '../utils/dom.js';
 import { appState } from '../app.js';
-import { fetchCategories, fetchMenuItems, updateMenuItem } from '../api/menu.js';
+import { fetchCategories, fetchMenuItems, updateMenuItem, uploadMenuImage } from '../api/menu.js';
 import { returnToDashboard } from '../handlers/view_handlers.js';
 import { logout } from '../api/api.js';
 
@@ -105,6 +105,7 @@ export async function renderManageMenuView(content) {
     if (appState.menuItems.length === 0) {
         menuItemsList.innerHTML = '<p class="text-gray-500 text-center py-8">No menu items found</p>';
     } else {
+        console.log("Rendering items:", appState.menuItems);
         const itemsHTML = appState.menuItems.map(item => `
             <div class="border-2 border-gray-200 rounded-lg p-4 hover:border-blue-400 transition">
                 <div class="mb-4 bg-gray-100 h-40 rounded-lg flex items-center justify-center overflow-hidden">

@@ -16,6 +16,7 @@ export async function fetchMenuItems(categoryId = null) {
         endpoint += `?category_id=${categoryId}`;
     }
     const items = await apiCall(endpoint);
+    console.log("Received items from API:", items);
     if (items) {
         appState.menuItems = items;
     }

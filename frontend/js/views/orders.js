@@ -70,14 +70,24 @@ async function renderOrderList(status = null) {
                 <div class="bg-gray-50 rounded p-4 mb-4">
                     <h4 class="font-bold text-gray-800 mb-2">Items:</h4>
                     <ul class="space-y-1 text-gray-700">
-                        ${order.items.map(item => `
-                            <li class="flex justify-between">
-                                <span>• ${menuItemMap[item.menu_item_id] || 'Unknown Item'} x${item.quantity}</span>
-                                <span>${formatCurrency(item.subtotal)}</span>
-                            </li>
-                        `).join('')}
+                        ${order.items.map(item => {
+                            const sizeInfo = item.size ? ` (${item.size.name})` : '';
+                            return `
+                                <li class="flex justify-between">
+                                    <span>• ${menuItemMap[item.menu_item_id] || 'Unknown Item'}${sizeInfo} x${item.quantity}</span>
+                                    <span>${formatCurrency(item.subtotal)}</span>
+                                </li>
+                            `;
+                        }).join('')}
                     </ul>
                 </div>
+
+                ${order.notes ? `
+                <div class="bg-yellow-50 rounded p-4 mb-4 border-l-4 border-yellow-400">
+                    <h4 class="font-bold text-gray-800 mb-2">Special Notes:</h4>
+                    <p class="text-gray-700">${order.notes}</p>
+                </div>
+                ` : ''}
 
                 <div class="flex gap-2 flex-wrap">
                     ${order.status === 'pending' ? `

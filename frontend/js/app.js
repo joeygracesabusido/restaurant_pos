@@ -4,6 +4,7 @@ import { renderMenuView } from './views/menu.js';
 import { renderOrdersView } from './views/orders.js';
 import { renderManageMenuView } from './views/manage_menu.js';
 import { renderInsertMenuView } from './views/insert_menu.js';
+import { renderInsertCategoryView } from './views/insert_category.js';
 import { renderPublicMenuView, togglePublicMenuView } from './views/public_menu.js';
 import { fetchUserProfile } from './api/user.js';
 import { fetchOrders } from './api/orders.js';
@@ -37,6 +38,8 @@ export function renderApp() {
         renderManageMenuView(content);
     } else if (appState.currentView === 'insert-menu') {
         renderInsertMenuView(content);
+    } else if (appState.currentView === 'insert-category') {
+        renderInsertCategoryView(content);
     }
 }
 

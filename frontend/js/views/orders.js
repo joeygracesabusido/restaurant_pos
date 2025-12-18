@@ -48,7 +48,7 @@ async function renderOrderList(status = null) {
     } else {
         ordersList.innerHTML = appState.orders.map(order => `
             <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-blue-600">
-                <div class="grid grid-cols-4 gap-4 mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
                     <div>
                         <p class="text-gray-600 text-sm">Order ID</p>
                         <p class="font-mono font-bold text-gray-800">${order.id.substring(0, 8)}</p>
@@ -58,12 +58,16 @@ async function renderOrderList(status = null) {
                         <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold ${statusColors[order.status]}">${order.status.toUpperCase()}</span>
                     </div>
                     <div>
-                        <p class="text-gray-600 text-sm">Total</p>
-                        <p class="text-xl font-bold text-green-600">${formatCurrency(order.total_amount)}</p>
+                        <p class="text-gray-600 text-sm">Customer</p>
+                        <p class="font-semibold text-gray-800">${order.customer_name || 'N/A'}</p>
                     </div>
                     <div>
-                        <p class="text-gray-600 text-sm">Time</p>
-                        <p class="font-semibold text-gray-800">${new Date(order.created_at).toLocaleTimeString()}</p>
+                        <p class="text-gray-600 text-sm">Table</p>
+                        <p class="font-semibold text-gray-800">${order.table_number || 'N/A'}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-600 text-sm">Total</p>
+                        <p class="text-xl font-bold text-green-600">${formatCurrency(order.total_amount)}</p>
                     </div>
                 </div>
 

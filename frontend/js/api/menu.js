@@ -98,6 +98,45 @@ export async function updateMenuItem(itemId, updateData) {
     }
 }
 
+
+export async function createCategory(categoryData) {
+    try {
+        const response = await apiCall('/menu/categories', 'POST', categoryData);
+        if (response) {
+            showSuccess('Category created!');
+            // Optionally, refresh categories from server
+            await fetchCategories();
+            return response;
+        }
+    } catch (error) {
+        showError('Failed to create category: ' + error.message);
+        throw error;
+    }
+}
+
+export async function updateCategory(categoryId, categoryData) {
+    try {
+        const response = await apiCall(`/menu/categories/${categoryId}`, 'PUT', categoryData);
+        if (response) {
+            showSuccess('Category updated!');
+            return response;
+        }
+    } catch (error) {
+        showError('Failed to update category: ' + error.message);
+        throw error;
+    }
+}
+
+export async function deleteCategory(categoryId) {
+    try {
+        await apiCall(`/menu/categories/${categoryId}`, 'DELETE');
+        showSuccess('Category deleted!');
+    } catch (error) {
+        showError('Failed to delete category: ' + error.message);
+        throw error;
+    }
+}
+
 export async function createMenuItem() {
     const name = document.getElementById('itemName').value;
     const description = document.getElementById('itemDescription').value;

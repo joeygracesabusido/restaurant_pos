@@ -1,8 +1,9 @@
 import { loadHTML } from '../utils/dom.js';
-import { appState } from '../app.js';
-import { fetchCategories, fetchMenuItems, updateMenuItem, uploadMenuImage } from '../api/menu.js';
+import { appState, renderApp } from '../app.js';
+import { fetchCategories, fetchMenuItems, updateMenuItem, uploadMenuImage, updateCategory, deleteCategory } from '../api/menu.js';
 import { returnToDashboard } from '../handlers/view_handlers.js';
 import { logout } from '../api/api.js';
+import { showSuccess, showError } from '../utils/errors.js';
 
 let currentEditItemId = null;
 
@@ -32,6 +33,79 @@ function addEditAddonField(addon = { name: '', price: 0 }) {
     div.querySelector('.remove-edit-addon-button').addEventListener('click', () => div.remove());
 }
 
+function renderCategories() {
+    const categoryList = document.getElementById('category-list');
+    if (!categoryList) return;
+    categoryList.innerHTML = ''; // Clear existing content
+
+    appState.categories.forEach(category => {
+        const div = document.createElement('div');
+        div.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-lg';
+        div.setAttribute('data-category-id', category.id);
+
+        div.innerHTML = `
+            <span class="font-medium text-gray-800">${category.name}</span>
+            <div class="space-x-2">
+                <button class="edit-category-button text-sm bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</button>
+                <button class="delete-category-button text-sm bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+            </div>
+        `;
+
+        categoryList.appendChild(div);
+    });
+
+    categoryList.querySelectorAll('.edit-category-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const categoryDiv = e.target.closest('[data-category-id]');
+            const categoryId = categoryDiv.dataset.categoryId;
+            const category = appState.categories.find(c => c.id === categoryId);
+            
+            categoryDiv.innerHTML = `
+                <input type="text" class="category-name-input flex-grow px-2 py-1 border rounded" value="${category.name}">
+                <div class="space-x-2">
+                    <button class="save-category-button text-sm bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Save</button>
+                    <button class="cancel-edit-category-button text-sm bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600">Cancel</button>
+                </div>
+            `;
+             // Add event listeners for the new buttons
+            categoryDiv.querySelector('.save-category-button').addEventListener('click', async () => {
+                const newName = categoryDiv.querySelector('.category-name-input').value;
+                if (newName && newName !== category.name) {
+                    try {
+                        await updateCategory(categoryId, { name: newName });
+                        showSuccess('Category updated successfully!');
+                        await fetchCategories();
+                        renderCategories();
+                    } catch (error) {
+                        showError('Failed to update category.');
+                        renderCategories(); // Re-render to restore original state
+                    }
+                } else {
+                    renderCategories(); // Re-render if name is empty or unchanged
+                }
+            });
+            categoryDiv.querySelector('.cancel-edit-category-button').addEventListener('click', () => renderCategories());
+        });
+    });
+
+    categoryList.querySelectorAll('.delete-category-button').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const categoryId = e.target.closest('[data-category-id]').dataset.categoryId;
+            if (confirm('Are you sure you want to delete this category? This might affect existing menu items.')) {
+                try {
+                    await deleteCategory(categoryId);
+                    showSuccess('Category deleted successfully!');
+                    await fetchCategories();
+                    await fetchMenuItems(); // Also refresh menu items
+                    renderApp(); // Re-render the whole app to reflect changes everywhere
+                } catch (error) {
+                    showError('Failed to delete category. Make sure no menu items are using it.');
+                }
+            }
+        });
+    });
+}
+
 export async function renderManageMenuView(content) {
     console.log("Entering renderManageMenuView");
     if (appState.menuItems.length === 0) {
@@ -44,6 +118,7 @@ export async function renderManageMenuView(content) {
     }
 
     content.innerHTML = await loadHTML('manage_menu');
+    renderCategories();
     console.log("manage_menu.html loaded.");
 
     document.getElementById('back-to-dashboard').addEventListener('click', returnToDashboard);
@@ -79,7 +154,7 @@ export async function renderManageMenuView(content) {
         const addons = [];
         document.querySelectorAll('#edit-addons-container > div').forEach(row => {
             const name = row.querySelector('.edit-addon-name').value;
-            const price = parseFloat(row.querySelector('.edit-addon-price').value);
+            const price = parseFloat(row.querySelector('.addon-price').value);
             if (name && !isNaN(price)) {
                 addons.push({ name, price });
             }
